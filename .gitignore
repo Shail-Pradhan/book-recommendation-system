@@ -52,8 +52,7 @@ dmypy.json
 # Streamlit
 .streamlit/
 
-# Artifacts or model files
-artifacts/
+
 
 # Ignore VSCode settings (optional)
 .vscode/
