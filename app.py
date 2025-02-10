@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 
 
-st.header('Book Recommendation System using Machine Learning')
+st.header('Book Recommender System Using Machine Learning')
 model = pickle.load(open('artifacts/model.pkl','rb'))
 book_names = pickle.load(open('artifacts/book_names.pkl','rb'))
 final_rating = pickle.load(open('artifacts/final_ratings.pkl','rb'))
@@ -15,19 +15,22 @@ def fetch_poster(suggestion):
     ids_index = []
     poster_url = []
 
-    for book_id in suggestion:
-        book_name.append(book_pivot.index[book_id])
+    for i in range(len(suggestion)):
+        book_name.append(book_pivot.index[suggestion[i]])
+        print(book_name)
 
-    for name in book_name[0]: 
+    for name in book_name[0]:
+        print(name)
         ids = np.where(final_rating['title'] == name)[0][0]
         ids_index.append(ids)
+  
 
     for idx in ids_index:
-        url = final_rating.iloc[idx]['img_url']
-        poster_url.append(url)
+        if idx is not None:  # Avoid fetching URL for None
+            url = final_rating.iloc[idx]['img_url']
+            poster_url.append(url)
 
     return poster_url
-
 
 
 def recommend_book(book_name):
